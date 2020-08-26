@@ -6,24 +6,60 @@ body {
     margin: 0;
 }
 
-h1 {
+h1.header {
     font-family: 'bjork';
     color: white;
+    top: 0;
+    display: inline-block;
+    z-index: 2;
 }
 
 div#vanta {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
+    position: absolute !important;
+    top: 0 !important;
+    z-index: -1;
+}
+
+div.body {
+    width: 100%;
+    height: 92.5vh;
     position: absolute;
     top: 0;
+    padding-top: 7.5vh;
+
+    display: grid;
+    grid-template: 85vh / 7.5% 20% 65% 7.5%;
+}
+
+@media only screen and (max-width: 1200px) {
+    h1.header {
+        margin-top: 0.25vh;
+    }
+    div.body {
+        grid-template: 85vh / 7.5% 30% 55% 7.5%;
+    }
+}
+
+div.schedule {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    color: white;
+    background-color:  rgba(54, 51, 59, 0.61);
+    /* z-index: 1; */
 }
 
 div#twitch-embed {
-    height: 85%;
+    height: 100%;
+    grid-column: 3 / 4;
+    grid-row: 1 / 2;
+    /* z-index: 1; */
 }
 
 #effect-control {
     position: absolute;
     bottom: 0;
     right: 0;
+    z-index: 1;
 }
