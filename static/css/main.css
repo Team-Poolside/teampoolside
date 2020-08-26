@@ -1,0 +1,29 @@
+body {
+    background-image: url('/static/images/pool.png');
+    background-repeat: repeat;
+    text-align: center;
+    height: 95vh;
+    margin: 0;
+}
+
+h1 {
+    font-family: 'bjork';
+    color: white;
+}
+
+div#vanta {
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+}
+
+div#twitch-embed {
+    height: 85%;
+}
+
+#effect-control {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
