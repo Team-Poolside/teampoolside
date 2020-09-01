@@ -102,32 +102,6 @@ h1.header {
     z-index: 1;
 }
 
-/* @media only screen /*and (max-width: 425px) and (orientation: portrait) {
-    .body {
-        grid-template-areas:
-            "  .      .      .      .   "
-            "stream stream stream stream"
-            " sched  sched sched  sched "
-            "  .      .      .      .   ";
-        grid-template: 2.5% 20% 60% 2.5% / repeat(4, 1fr);
-        row-gap: 5%;
-    }
-
-    #twitch-embed {
-        display: none !important;
-    }
-
-    #watch-on-twitch {
-        background: rgba(54, 51, 59, 0.726);
-        padding: 1em;
-    }
-
-    #stream-live {
-        font-size: xx-large;
-        color: white;
-    }
-} */
-
 @media only screen and (min-width: 426px) and (orientation: landscape) {
     h1.header {
         margin-top: 0.25vh;
