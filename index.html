@@ -9,10 +9,30 @@
         <div id="vanta"></div>
         <div class="body">
             <div class="schedule">
-                <h1>Upcoming Events</h1>
+                <div class="header">
+                    <h1>Upcoming Events</h1>
+                    <hr />
+                </div>
+                <div class="list-el">
+                    <h1>POOLSIDE XTREME</h1>
+                    <h1>9/5/20 @ 8PM CT</h1>
+                    <img src="/static/images/poolside_xtreme.jpg" />
+                </div>
+                
             </div>
-            <div id="twitch-embed">
-                <script src="static/js/twitch.js" type="module"></script>
+            <div id="twitch-container">
+                <div id="twitch-embed">
+                    <script src="static/js/twitch.js" type="module"></script>
+                </div>
+                <div id="watch-on-twitch">
+                    <a id="twitch-link" href="https://twitch.tv/Team_Poolside">
+                        <h1 style="display: inline;">
+                            Click here to watch the stream on <div id="twitch-logo"></div>
+                            <!-- <img width="100em" src="/static/images/Twitch-Wordmark-White.svg" /> -->
+                        </h1>
+                    </a>
+                    <span id="stream-live">Checking status...</span>
+                </div>
             </div>
         </div>
 
