@@ -24,24 +24,24 @@ h1.header {
     z-index: 2;
 }
 
+.body {
+    height: 95vh;
+
+    display: grid;
+    grid-template-areas:
+        "  .   "
+        "stream"
+        " sched"
+        "  .   ";
+    grid-template-rows: 2.5% 15% 80% 2.5%;
+}
+
 #vanta {
     width: 100vw;
     height: 100vh;
     position: absolute !important;
     top: 0 !important;
     z-index: -1;
-}
-
-.body {
-    width: 100%;
-    height: 92.5vh;
-    position: absolute;
-    top: 0;
-    padding-top: 7.5vh;
-
-    display: grid;
-    grid-template: 85vh / 7.5%  20%   65%   7.5%;
-    grid-template-areas:  ".   sched stream  .";
 }
 
 .schedule {
@@ -61,17 +61,38 @@ h1.header {
     width: 85%;
 }
 
+#twitch-container {
+    grid-area: stream;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#twitch-embed {
+    height: 95%;
+    width: 100%;
+
+    display: none;
+}
+
+#watch-on-twitch {
+    background: rgba(54, 51, 59, 0.726);
+    padding: 1em 0 1em 0;
+    width: 100%;
+}
+
 #twitch-logo {
     height: 6ex;
-    /* width: 6ex; */
     display: block;
     overflow: hidden;
     background: url("/static/images/Twitch-Wordmark-White.svg") no-repeat center;
 }
 
-#twitch-container {
-    height: 100%;
-    grid-area: stream;
+#stream-live {
+    font-size: xx-large;
+    color: white;
 }
 
 #effect-control {
@@ -81,43 +102,43 @@ h1.header {
     z-index: 1;
 }
 
-#twitch-embed {
-    height: 100%;
-}
+/* @media only screen /*and (max-width: 425px) and (orientation: portrait) {
+    .body {
+        grid-template-areas:
+            "  .      .      .      .   "
+            "stream stream stream stream"
+            " sched  sched sched  sched "
+            "  .      .      .      .   ";
+        grid-template: 2.5% 20% 60% 2.5% / repeat(4, 1fr);
+        row-gap: 5%;
+    }
 
-@media only screen and (min-width: 1201px) {
-    #watch-on-twitch {
-        height: 0;
+    #twitch-embed {
         display: none !important;
     }
-}
 
-@media only screen and (max-width: 1200px) and (orientation: landscape) {
+    #watch-on-twitch {
+        background: rgba(54, 51, 59, 0.726);
+        padding: 1em;
+    }
+
+    #stream-live {
+        font-size: xx-large;
+        color: white;
+    }
+} */
+
+@media only screen and (min-width: 426px) and (orientation: landscape) {
     h1.header {
         margin-top: 0.25vh;
     }
 
     .body {
-        grid-template: 85vh / 2.5%  60%   20%   2.5%;
-        grid-template-areas:  ".   sched stream  .";
+        grid-template: 85vh / 2.5% 60% 20% 2.5%;
+        grid-template-areas: ".   sched stream  .";
         column-gap: 5%;
     }
 
-    /* .schedule {
-        grid-column: 2 / 3;
-    } */
-
-    #twitch-container {
-        /* grid-column: 3 / 4; */
-        background: rgba(54, 51, 59, 0.61);
-        padding: 1em 1em 0 1em;
-        height: auto;
-
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
     #twitch-embed {
         display: none !important;
     }
@@ -125,6 +146,8 @@ h1.header {
     #watch-on-twitch {
         background: rgba(54, 51, 59, 0.726);
         padding: 1em;
+
+        height: 92.5%; /* XXX: ??? */
     }
 
     #stream-live {
@@ -133,23 +156,21 @@ h1.header {
     }
 }
 
-@media only screen and (max-width: 425px) and (orientation: portrait) {
+@media only screen and (min-width: 1201px) {
     .body {
-        grid-template-areas:
-              "."
-            "stream"
-            "sched"
-              ".";
-        grid-template: 2.5% 20% 60% 2.5% / 85vh;
-        row-gap: 5%;
+        width: 100%;
+        height: 92.5vh;
+        position: absolute;
+        top: 0;
+        padding-top: 7.5vh;
+        column-gap: normal;
+        
+        grid-template: 85vh / 7.5%  20%   65%   7.5%;
+        grid-template-areas: ".   sched stream  .";
     }
 
-    /* .schedule {
-        grid-area: sched;
-    } */
-
     #twitch-container {
-        /* grid-area: stream; */
+        grid-area: stream;
         background: rgba(54, 51, 59, 0.61);
         padding: 1em 1em 0 1em;
         height: auto;
@@ -159,17 +180,13 @@ h1.header {
         justify-content: center;
     }
 
-    #twitch-embed {
+    #watch-on-twitch {
+        height: 0;
         display: none !important;
     }
 
-    #watch-on-twitch {
-        background: rgba(54, 51, 59, 0.726);
-        padding: 1em;
-    }
-
-    #stream-live {
-        font-size: xx-large;
-        color: white;
+    #twitch-embed {
+        display: unset !important;
     }
 }
+
