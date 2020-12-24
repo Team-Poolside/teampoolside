@@ -1,5 +1,6 @@
 body {
-    background-image: url('/static/images/pool.png');
+    /* background-image: url('/static/images/pool.png'); */
+    background-image: url('/static/images/red-satin-2k-square.png');
     background-repeat: repeat;
     text-align: center;
     height: 95vh;
