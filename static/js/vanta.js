@@ -17,7 +17,7 @@ export const toggleBackgroundEffect = () => {
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: 0x6e001a,
+            color: 0x005182,
             shininess: 27.00,
             waveHeight: 21.50,
             waveSpeed: 0.90
