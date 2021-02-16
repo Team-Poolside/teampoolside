@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+      <link rel="stylesheet" href="{% static 'website/css/main.css' %}" />
+      <!-- TODO: color changing logic -->
+      <meta name="theme-color" content="{{ colors.poolside_blue }}" />
+    </head>
+    <body>
+        <h1 class="header">Welcome to Poolside</h1>
+        <div id="vanta"></div>
+        <div class="body">
+            <div class="schedule">
+                <div class="header">
+                    <h1>Upcoming Events</h1>
+                    <hr />
+                </div>
+                {% for event in events %}
+                <div class="list-el">
+                    <h1>{{ event.0.name }}</h1>
+                    <h1>{{ event.0.event_date }}</h1>
+                    <img src="{{ event.1.0.image.url }}" />
+                </div>
+                {% endfor %}
+            </div>
+            <div id="twitch-container">
+                <div id="twitch-embed">
+                    <script
+                        src="{% static 'website/js/twitch.js' %}"
+                        type="module">
+                    </script>
+                </div>
+                <div id="watch-on-twitch">
+                    <a
+                        id="twitch-link"
+                        href="https://twitch.tv/teampoolsidotde">
+
+                        <h1 style="display: inline;">
+                            Click here to watch the stream on <div class="twitch-logo-full"></div>
+                        </h1>
+                    </a>
+                    <span id="stream-live">Checking status...</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <a href="https://twitch.tv/teampoolsidotde">
+                <img
+                    src="{% static 'website/images/TwitchGlitchPurple.svg' %}"
+                    height="59"
+                    width="59" />
+            </a>
+            <a href="https://discord.gg/XEKb2nE">
+                <img
+                    src="{% static 'website/images/Discord-Logo-White.svg' %}"
+                    height="59"
+                    width="59" />
+            </a>
+            <a href="https://twitter.com/team_poolside">
+                <img
+                    src="{% static 'website/images/Twitter_Social_Icon_Square_Color.svg' %}"
+                    height="59"
+                    width="59" />
+            </a>
+            <a href="https://instagram.com/team_poolside">
+                <img
+                    src="{% static 'website/images/IG_Glyph_Fill.png' %}"
+                    style="padding: 15px; background: #E1306C;"
+                    height="29"
+                    width="29" />
+            </a>
+        </div>
+
+        <button id="effect-control" style="height: 29px;">
+            Toggle background effects
+        </button>
+    </body>
+    <!-- TODO: pass theme color to script? -->
+    <script src="{% static 'website/js/vanta.js' %}" type="module">
+    </script>
+</html>
