@@ -19,7 +19,7 @@ export const toggleBackgroundEffect = () => {
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: wavepool_pink,
+            color: poolside_blue,
             shininess: 27.00,
             waveHeight: 21.50,
             waveSpeed: 0.90
