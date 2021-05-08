@@ -25,5 +25,5 @@ media
 ~
 
 ### staging/production settings
-teampoolside/settings/stage.py
-teampoolside/settings/prod.py
+.env.prod
+.env.prod.db

@@ -3,10 +3,13 @@ import "./vendor/vanta.waves.min.js";
 import "./vendor/vanta.waves.min.js";
 
 let effect = null;
+let theme_color;
 
-const yuleside_red  = 0x6e001a
-const wavepool_pink = 0x9e0a8e
-const poolside_blue = 0x005182
+if (!document.currentScript) {
+    theme_color = 0x005182; // fallback to poolside blue
+} else {
+    theme_color = parseInt(document.currentScript.getAttribute("color"))
+}
 
 export const toggleBackgroundEffect = () => {
     if (!effect) {
@@ -19,7 +22,7 @@ export const toggleBackgroundEffect = () => {
             minWidth: 200.00,
             scale: 1.00,
             scaleMobile: 1.00,
-            color: poolside_blue,
+            color: theme_color,
             shininess: 27.00,
             waveHeight: 21.50,
             waveSpeed: 0.90

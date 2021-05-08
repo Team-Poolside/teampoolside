@@ -12,6 +12,30 @@ Main page is located in `website`, shop is located in `store`
 
 ---
 
+#### Docker (preferred)
+
+this site is containerized using docker. start the services using `docker-compose`:
+
+```sh
+$ docker-compose up -d --build
+```
+
+which will serve the site at `localhost:8000`
+
+you can kill this by running
+
+```sh
+$ docker-compose down
+```
+
+
+
+to test the production environment, pass `-f docker-compose.prod.yml` to the above commands
+
+(if you need to remove the data volumes too, pass `-v` to the down commands)
+
+#### Conda
+
 Provided for convenience is a conda environment file. Install it with
 
 ```sh
