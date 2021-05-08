@@ -36,6 +36,12 @@ class Event(models.Model):
     event_date = models.DateTimeField('date/time of the event')
     theme_color = models.ForeignKey(ThemeColor, on_delete=models.DO_NOTHING, null=True)
 
+    def __unicode__(self):
+        return self.name
+    
+    def __str__(self):
+        return self.name
+
 
 class Flyer(models.Model):
     """describes a flyer associated with an event"""

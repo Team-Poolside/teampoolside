@@ -11,10 +11,12 @@ def index(request: HttpRequest):
     # get all still ongoing events in the database whose publish dates have past and pass them to the view
     return HttpResponse(render(request, 'website/index.html', {
         'events': [
-            (event, Flyer.objects.filter(event__name=event.name))
+            # (event, flyer, is_active)
+            (event, Flyer.objects.filter(event__name=event.name), timezone.now() < event.event_date + timedelta(days=1))
             for event in list(Event.objects.all().filter(publish_date__lte=timezone.now()).order_by('event_date'))
             if timezone.now() < event.event_date + timedelta(days=1)
         ],
+        'active_event': next(iter([event for event in list(Event.objects.all().order_by('event_date')) if timezone.now() < event.event_date + timedelta(days=1)]), None),
         'colors': {
             'yuleside_red': '#6e001a',
             'wavepool_pink': '#9e0a8e',

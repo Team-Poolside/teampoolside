@@ -79,7 +79,12 @@
             <a href="/admin">staff area</a>
         </div>
     </body>
-    <!-- TODO: pass theme color to script? -->
-    <script src="{% static 'website/js/vanta.js' %}" type="module">
+    <script
+        {% if active_event %}
+        src="{% static 'website/js/vanta.js' %}?color={{ active_event.theme_color.color|cut:'#' }}"
+        {% else %}
+        src="{% static 'website/js/vanta.js' %}"
+        {% endif %}
+        type="module" />
     </script>
 </html>
