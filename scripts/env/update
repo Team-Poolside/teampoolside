@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+conda env export | grep -v "^prefix: " > ./app/environment.yml
+
+sed -E -i 's/(name: ).+$/\1env/' ./app/environment.yml

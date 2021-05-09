@@ -1,0 +1,53 @@
+### stage 1: generate the conda environment
+FROM continuumio/miniconda3 as builder
+
+WORKDIR /usr/src/app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONBUFFERED 1
+
+# install build dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    lsb-release \
+    gnupg2
+
+RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
+RUN sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+
+RUN apt-get update && apt-get install -y \
+    postgresql \
+    && apt-get clean all
+
+# create the environment
+COPY environment.yml .
+RUN conda env create -f environment.yml --prefix /usr/src/app/env
+
+### stage 2: production image
+FROM continuumio/miniconda3
+
+RUN apt-get update && apt-get install -y netcat && apt-get clean all
+
+RUN useradd -rms /bin/bash -U app
+
+ENV HOME=/home/app
+ENV APP_HOME=${HOME}/web
+RUN mkdir ${APP_HOME}
+RUN mkdir ${APP_HOME}/static
+RUN mkdir ${APP_HOME}/media
+WORKDIR ${APP_HOME}
+
+# copy prebuilt conda environment from stage 1
+COPY --from=builder /usr/src/app/env ${APP_HOME}/env
+
+COPY ./entrypoint.prod.sh ${APP_HOME}
+
+COPY . ${APP_HOME}
+
+# app user owns the project files
+RUN chown -R app:app ${APP_HOME}
+
+# switch to app user
+USER app
+
+ENTRYPOINT [ "/home/app/web/entrypoint.prod.sh" ]
