@@ -86,8 +86,8 @@ jobs:
           ssh -o StrictHostKeyChecking=no root@${{ secrets.DO_IP_ADDR }} << 'ENDSSH'
             cd /app
             source .env
-            echo $GITHUB_TOKEN | docker login -u $GITHUB_USER --password-stdin docker.pkg.github.com
+            docker login -u $GITHUB_USER -p $GITHUB_TOKEN
             docker pull $WEB_IMAGE
-            docker_pull $NGINX_IMAGE
+            docker pull $NGINX_IMAGE
             docker-compose -f docker-compose.prod.yml up -d
           ENDSSH
