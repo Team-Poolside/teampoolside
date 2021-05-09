@@ -1,0 +1,89 @@
+name: CI/CD
+
+on: [push]
+
+env:
+  WEB_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/web
+  NGINX_IMAGE: docker.pkg.github.com/$GITHUB_REPOSITORY/nginx
+
+jobs:
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    environment: django-cicd
+    permissions:
+      packages: write
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+      - name: Add environment variables to .env
+        run: |
+          echo DEBUG=0 >> .env
+          echo SQL_ENGINE=django.db.backends.postgresql_psycopg2
+          echo DATABASE=postgres >> .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
+          echo SQL_USER=${{ secrets.SQL_USER }} >> .env
+          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
+          echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
+          echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
+      - name: Authenticate with GH packages
+        run: echo ${{ secrets.GITHUB_TOKEN }} | docker login -u ${GITHUB_ACTOR} --password-stdin docker.pkg.github.com
+      - name: Pull images
+        run: |
+          docker pull ${{ env.WEB_IMAGE }} || true
+          docker pull ${{ env.NGINX_IMAGE }} || true
+      - name: Build images
+        run: docker-compose -f docker-compose.ci.yml build
+      - name: Push images
+        run: |
+          docker push ${{ env.WEB_IMAGE }}
+          docker push ${{ env.NGINX_IMAGE }}
+  deploy:
+    name: Deploy to DigitalOcean
+    runs-on: ubuntu-latest
+    environment: django-cicd
+    needs: build
+    permissions:
+      packages: read
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v1
+      - name: Add environment variables to .env
+        run: |
+          echo DEBUG=0 >> .env
+          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DO_IP_ADDR }}
+          echo SQL_ENGINE=django.db.backends.postgresql_psycopg2
+          echo DATABASE=postgres >> .env
+          echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
+          echo SQL_DATABASE=${{ secrets.SQL_DATABASE }} >> .env
+          echo SQL_USER=${{ secrets.SQL_USER }} >> .env
+          echo SQL_PASSWORD=${{ secrets.SQL_PASSWORD }} >> .env
+          echo SQL_HOST=${{ secrets.SQL_HOST }} >> .env
+          echo SQL_PORT=${{ secrets.SQL_PORT }} >> .env
+          echo WEB_IMAGE=${{ env.WEB_IMAGE }} >> .env
+          echo NGINX_IMAGE=${{ env.NGINX_IMAGE }} >> .env
+          echo GITHUB_USER=${GITHUB_ACTOR} >> .env
+          echo GITHUB_TOKEN=${GITHUB_TOKEN} >> .env
+      - name: Add private key to ssh-agent
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          ssh-add - <<< "${{ secrets.PRIVATE_KEY }}"
+      - name: Build and deploy images on DO
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.yml root@${{ secrets.DO_IP_ADDR }}:/app
+          ssh -o StrictHostKeyChecking=no root@${{ secrets.DO_IP_ADDR }} << 'ENDSSH'
+            cd /app
+            source .env
+            echo $GITHUB_TOKEN | docker login -u $GITHUB_USER --password-stdin docker.pkg.github.com
+            docker pull $WEB_IMAGE
+            docker_pull $NGINX_IMAGE
+            docker-compose -f docker-compose.prod.yml up -d
+          ENDSSH

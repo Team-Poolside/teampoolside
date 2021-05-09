@@ -2,6 +2,11 @@ version: '3.7'
 
 services:
   web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+      cache_from:
+        - "${WEB_IMAGE}"
     image: "${WEB_IMAGE}"
     command: |
       conda run --no-capture-output -p /home/app/web/env python -m gunicorn teampoolside.wsgi:application --bind 0.0.0.0:8000
@@ -13,6 +18,10 @@ services:
     env_file:
       - .env
   nginx:
+    build:
+      context: ./nginx
+      cache_from:
+        - "${NGINX_IMAGE}"
     image: "${NGINX_IMAGE}"
     volumes:
       - static_data:/home/app/web/static

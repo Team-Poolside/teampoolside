@@ -28,22 +28,18 @@ you can kill this by running
 $ docker-compose down
 ```
 
-
-
-to test the production environment, pass `-f docker-compose.prod.yml` to the above commands
-
 (if you need to remove the data volumes too, pass `-v` to the down commands)
 
 #### Conda
 
-Provided for convenience is a conda environment file. Install it with
+provided for convenience is a conda environment file. install it with
 
 ```sh
 $ ./scripts/env/init
 ```
 
 in the root of the project directory (you'll need a conda distribution installed).
-Then you can activate it with
+then you can activate it with
 
 ```sh
 $ ./scripts/env/activate
@@ -95,4 +91,4 @@ I also recommend setting things up so that the conda env is automatically activa
 
 4. run `direnv allow .` in the repository directory
 
-_Note: the above was adapted into a more readable format from [this article](https://medium.com/@manishdixit1986/auto-switch-conda-env-per-directory-using-conda-direnv-in-linux-13c912da6520).
+_Note: the above was adapted into a more readable format from [this article](https://medium.com/@manishdixit1986/auto-switch-conda-env-per-directory-using-conda-direnv-in-linux-13c912da6520)._
