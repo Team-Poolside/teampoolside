@@ -13,7 +13,7 @@ jobs:
       - name: Prepare environment
         run: |
           echo WEB_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
-          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
+          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/nginx >> $GITHUB_ENV
       - name: Checkout master
         uses: actions/checkout@v1
       - name: Add environment variables to .env
@@ -51,7 +51,7 @@ jobs:
       - name: Prepare environment
         run: |
           echo WEB_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
-          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
+          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/nginx >> $GITHUB_ENV
       - name: Checkout master
         uses: actions/checkout@v1
       - name: Add environment variables to .env
