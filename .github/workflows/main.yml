@@ -2,10 +2,6 @@ name: CI/CD
 
 on: [push]
 
-env:
-  WEB_IMAGE: docker.pkg.github.com/${GITHUB_REPOSITORY}/web
-  NGINX_IMAGE: docker.pkg.github.com/${GITHUB_REPOSITORY}/nginx
-
 jobs:
   build:
     name: Build Docker Images
@@ -14,6 +10,10 @@ jobs:
     permissions:
       packages: write
     steps:
+      - name: Prepare environment
+        run: |
+          echo WEB_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
+          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
       - name: Checkout master
         uses: actions/checkout@v1
       - name: Add environment variables to .env
@@ -48,6 +48,10 @@ jobs:
       packages: read
     if: github.ref == 'refs/heads/master'
     steps:
+      - name: Prepare environment
+        run: |
+          echo WEB_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
+          echo NGINX_IMAGE=docker.pkg.github.com/$(echo ${{ github.repository }} | tr '[:upper:]' '[:lower:]')/web >> $GITHUB_ENV
       - name: Checkout master
         uses: actions/checkout@v1
       - name: Add environment variables to .env
