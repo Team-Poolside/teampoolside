@@ -57,7 +57,7 @@ jobs:
       - name: Add environment variables to .env
         run: |
           echo DEBUG=0 >> .env
-          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DO_IP_ADDR }}
+          echo DJANGO_ALLOWED_HOSTS=${{ secrets.DO_IP_ADDR }} teampoolside
           echo SQL_ENGINE=django.db.backends.postgresql_psycopg2
           echo DATABASE=postgres >> .env
           echo SECRET_KEY=${{ secrets.SECRET_KEY }} >> .env
