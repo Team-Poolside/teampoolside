@@ -47,6 +47,8 @@ COPY . ${APP_HOME}
 # app user owns the project files
 RUN chown -R app:app ${APP_HOME}
 
+RUN chmod +x ${APP_HOME}/entrypoint.prod.sh
+
 # switch to app user
 USER app
 
