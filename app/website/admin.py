@@ -7,6 +7,7 @@ from .models import Event, Teaser, ThemeColor, Setlist
 def flyer_inline(clazz):
     class FlyerInline(admin.TabularInline):
         model = clazz
+        max_num = 1
     
     return FlyerInline
 
