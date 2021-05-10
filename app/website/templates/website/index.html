@@ -19,7 +19,12 @@
                 <div class="list-el">
                     <h1>{{ event.0.name }}</h1>
                     <h1>{{ event.0.event_date }}</h1>
+                    <!-- show setlist if the event is active, otherwise just the teaser -->
+                    {% if event.3 %}
+                    <img src="{{ event.2.0.image.url }}" />
+                    {% else %}
                     <img src="{{ event.1.0.image.url }}" />
+                    {% endif %}
                 </div>
                 {% endfor %}
             </div>

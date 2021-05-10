@@ -28,7 +28,28 @@ you can kill this by running
 $ docker-compose down
 ```
 
-(if you need to remove the data volumes too, pass `-v` to the down commands)
+to remove the data volumes, pass `-v` to the `down` command.
+
+the website source is mounted in the docker-compose `web` service. this means
+changes you make on the local filesystem will be automatically applied to the
+running container. a script at `scripts/manage` is provided for easy access to
+the site's `manage.py` in the running container. for example, after you make
+changes to `models.py` you should run
+
+```sh
+$ ./scripts/manage makemigrations
+```
+
+and then
+
+```sh
+$ ./scripts/manage migrate
+```
+
+to make and apply the database migrations.
+
+note that if you make any changes to the conda environment (see below), you will
+probably need to rebuild and restart the containers.
 
 #### Conda
 
@@ -44,6 +65,8 @@ then you can activate it with
 ```sh
 $ ./scripts/env/activate
 ```
+
+then you will be able to follow a standard django workflow (e.g. `python manage.py makemigrations`)
 
 if you add new packages to the virtual environment, update it with
 

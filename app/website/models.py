@@ -43,7 +43,12 @@ class Event(models.Model):
         return self.name
 
 
-class Flyer(models.Model):
-    """describes a flyer associated with an event"""
+class Teaser(models.Model):
+    """describes a teaser flyer associated with an event"""
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    image = models.ImageField('Flyer image')
+    image = models.ImageField('Teaser image')
+
+
+class Setlist(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    image = models.ImageField('Setlist image')
