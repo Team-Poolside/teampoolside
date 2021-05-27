@@ -9,6 +9,7 @@ services:
     volumes:
       - static_data:/home/app/web/static
       - media_data:/home/app/web/media
+      - danmaku:/home/app/web/danmaku
     expose:
       - 8000
     env_file:
@@ -22,6 +23,7 @@ services:
       - ./data/certbot/www:/var/www/certbot
       - static_data:/home/app/web/static
       - media_data:/home/app/web/media
+      - danmaku:/home/app/web/danmaku
     ports:
       - 80:80
       - 443:443
@@ -40,3 +42,4 @@ services:
 volumes:
   static_data:
   media_data:
+  danmaku:
