@@ -8,7 +8,7 @@ from .models import Event, Setlist, Teaser
 
 
 def is_active(event):
-    return event.event_date < timezone.now() < event.event_date + timedelta(days=1)
+    return event.event_date - timedelta(hours=6) < timezone.now() < event.event_date + timedelta(days=1)
 
 def index(request: HttpRequest):
     # get all still ongoing events in the database whose publish dates have past and pass them to the view
