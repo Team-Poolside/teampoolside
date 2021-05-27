@@ -23,4 +23,6 @@ RUN conda env create -f environment.yml
 
 COPY . .
 
+RUN chmod +x /usr/src/app/entrypoint.sh
+
 ENTRYPOINT [ "/usr/src/app/entrypoint.sh" ]

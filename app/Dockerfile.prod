@@ -9,6 +9,7 @@ ENV PYTHONBUFFERED 1
 # install build dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
+    git \
     lsb-release \
     gnupg2
 
@@ -43,6 +44,9 @@ COPY --from=builder /usr/src/app/env ${APP_HOME}/env
 COPY ./entrypoint.prod.sh ${APP_HOME}
 
 COPY . ${APP_HOME}
+
+# clone danmaku overlay
+RUN git clone https://github.com/Team-Poolside/twitch-danmaku-overlay ${APP_HOME}/danmaku
 
 # app user owns the project files
 RUN chown -R app:app ${APP_HOME}
