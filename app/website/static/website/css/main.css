@@ -1,5 +1,5 @@
 body {
-    background-image: url('/static/images/pool.png');
+    background-image: url('/static/website/images/pool.png');
     /* yuleside: */ /* background-image: url('/static/images/red-satin-2k-square.png'); */
     background-repeat: repeat;
     text-align: center;
@@ -60,6 +60,25 @@ h1.header {
 .schedule > .list-el > img {
     height: auto;
     width: 85%;
+}
+
+.advert {
+    /* position: absolute;
+    right: 0;
+    top: 15%; */
+    width: 180px;
+    height: 724px;
+    display: none;
+}
+
+#ad-image {
+    width: 180px;
+    height: 724px;
+    background-image: url('/static/website/images/poolside_merch.png');
+}
+
+#ad-image:hover {
+    background-image: url('/static/website/images/poolside_merch_hover.png');
 }
 
 #twitch-container {
@@ -167,14 +186,20 @@ h1.header {
         padding-top: 7.5vh;
         column-gap: normal;
         
-        grid-template: 85vh / 7.5%  20%   65%   7.5%;
-        grid-template-areas: ".   sched stream  .";
+        grid-template: 85vh / 7.5%  20%   62.5%   10%;
+        grid-template-areas: ".   sched stream  merch";
     }
 
     .footer {
         top: unset;
         bottom: 0;
         flex-direction: column;
+    }
+
+    .advert {
+        grid-area: merch;
+        display: unset !important;
+        padding: 4em 0 0 0.5em;
     }
 
     #twitch-container {
